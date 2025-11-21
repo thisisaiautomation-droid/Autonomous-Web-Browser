@@ -1,0 +1,364 @@
+{
+  "name": "Air top N",
+  "nodes": [
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chatTrigger",
+      "typeVersion": 1.3,
+      "position": [
+        0,
+        0
+      ],
+      "id": "cb1f8c40-9253-4ac8-a459-66795636dbf1",
+      "name": "When chat message received",
+      "webhookId": "9244013c-8a23-412a-845c-1ca84bef76ba"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.agent",
+      "typeVersion": 2.2,
+      "position": [
+        208,
+        0
+      ],
+      "id": "4669d9bd-023c-4cba-9e73-1149337a9ff5",
+      "name": "AI Agent"
+    },
+    {
+      "parameters": {
+        "options": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        -320,
+        112
+      ],
+      "id": "6b90c41b-eabd-4ddb-b366-ad4498a5d896",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "w8bJFTDn1tdLFzhZ",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.memoryBufferWindow",
+      "typeVersion": 1.3,
+      "position": [
+        -160,
+        128
+      ],
+      "id": "d036c631-2ff2-4eb8-b8ca-3d4d7502aa06",
+      "name": "Simple Memory"
+    },
+    {
+      "parameters": {
+        "workflowId": {
+          "__rl": true,
+          "value": "KGbkKkjwAj5ZJOoB",
+          "mode": "list",
+          "cachedResultUrl": "/workflow/KGbkKkjwAj5ZJOoB",
+          "cachedResultName": "Building a Browser"
+        },
+        "workflowInputs": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "profile_name": "Just-Automate",
+            "url": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('url', `url of the website that we are visiting`, 'string') }}"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "url",
+              "displayName": "url",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            },
+            {
+              "id": "profile_name",
+              "displayName": "profile_name",
+              "required": false,
+              "defaultMatch": false,
+              "display": true,
+              "canBeUsedToMatch": true,
+              "type": "string",
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.toolWorkflow",
+      "typeVersion": 2.2,
+      "position": [
+        80,
+        288
+      ],
+      "id": "c6cf575c-7507-4c46-9f19-a827ad962bcc",
+      "name": "Call 'Building a Browser'"
+    },
+    {
+      "parameters": {
+        "resource": "interaction",
+        "operation": "type",
+        "sessionId": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Session_ID', `the 'sessionId'returned by the 'Start Browser' tool`, 'string') }}",
+        "windowId": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Window_ID', `the 'windowId'returned by the 'Start Browser' tool`, 'string') }}",
+        "text": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Text', ``, 'string') }}",
+        "pressEnterKey": true,
+        "elementDescription": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Element_Description', `Search bar usually contains a placeholder that says \"search\"`, 'string') }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.airtopTool",
+      "typeVersion": 1,
+      "position": [
+        -48,
+        288
+      ],
+      "id": "d6268207-de5f-44a1-8bb7-59a2b12889e3",
+      "name": "Type text",
+      "credentials": {
+        "airtopApi": {
+          "id": "Z1wHmlcNgHHsYqDz",
+          "name": "Airtop account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "interaction",
+        "sessionId": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Session_ID', `the 'sessionId' returned by the 'Start Browser' tool`, 'string') }}",
+        "windowId": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Window_ID', `the 'windowId' returned by the 'Start Browser' tool`, 'string') }}",
+        "elementDescription": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Element_Description', ``, 'string') }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.airtopTool",
+      "typeVersion": 1,
+      "position": [
+        208,
+        288
+      ],
+      "id": "4f3d3a17-87c8-42a7-af26-29e7c191bb87",
+      "name": "Click an element",
+      "credentials": {
+        "airtopApi": {
+          "id": "Z1wHmlcNgHHsYqDz",
+          "name": "Airtop account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "extraction",
+        "sessionId": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Session_ID', `the 'sessionId' returned by the 'Start Browser' tool`, 'string') }}",
+        "windowId": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Window_ID', `the 'windowId'returned by the 'Start Browser' tool`, 'string') }}",
+        "prompt": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Prompt', ``, 'string') }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.airtopTool",
+      "typeVersion": 1,
+      "position": [
+        368,
+        288
+      ],
+      "id": "a17fd370-1105-46ef-b89f-b4a45014f7f4",
+      "name": "Query page with pagination",
+      "credentials": {
+        "airtopApi": {
+          "id": "Z1wHmlcNgHHsYqDz",
+          "name": "Airtop account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "resource": "window",
+        "operation": "load",
+        "sessionId": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Session_ID', `the 'sessionId' returned by the 'Start Browser' tool`, 'string') }}",
+        "windowId": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Window_ID', `the 'windowId' returned by the 'Start Browser' tool`, 'string') }}",
+        "url": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('URL', ``, 'string') }}",
+        "additionalFields": {}
+      },
+      "type": "n8n-nodes-base.airtopTool",
+      "typeVersion": 1,
+      "position": [
+        528,
+        288
+      ],
+      "id": "9b35b7f1-63cb-428b-90a5-363e6b41b34b",
+      "name": "Load a page",
+      "credentials": {
+        "airtopApi": {
+          "id": "Z1wHmlcNgHHsYqDz",
+          "name": "Airtop account 2"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "operation": "terminate",
+        "sessionId": "={{ /*n8n-auto-generated-fromAI-override*/ $fromAI('Session_ID', `the 'sessionId' returned by the 'Start Browser' tool`, 'string') }}"
+      },
+      "type": "n8n-nodes-base.airtopTool",
+      "typeVersion": 1,
+      "position": [
+        688,
+        288
+      ],
+      "id": "e77f0fe1-2e84-4b26-8e02-108f1cd1b954",
+      "name": "Terminate a session",
+      "credentials": {
+        "airtopApi": {
+          "id": "Z1wHmlcNgHHsYqDz",
+          "name": "Airtop account 2"
+        }
+      }
+    },
+    {
+      "parameters": {},
+      "type": "@n8n/n8n-nodes-langchain.toolThink",
+      "typeVersion": 1.1,
+      "position": [
+        -160,
+        288
+      ],
+      "id": "2e4d8e58-a07f-4eb0-bec4-2dbf05a17370",
+      "name": "Think"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "When chat message received": {
+      "main": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Simple Memory": {
+      "ai_memory": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_memory",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Call 'Building a Browser'": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Type text": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Click an element": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Query page with pagination": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Load a page": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Terminate a session": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Think": {
+      "ai_tool": [
+        [
+          {
+            "node": "AI Agent",
+            "type": "ai_tool",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": false,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "9d426182-1a54-42e4-a290-a14ac0d93144",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "8f30cece5de95061e5e241a6029be07b644980a038ef1a26e59db178689fdfdf"
+  },
+  "id": "z4jvT2B6A8iZzBJy",
+  "tags": []
+}
